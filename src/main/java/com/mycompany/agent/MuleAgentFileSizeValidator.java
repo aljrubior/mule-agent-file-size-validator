@@ -9,12 +9,11 @@ import org.apache.logging.log4j.Logger;
 import javax.inject.Named;
 import javax.inject.Singleton;
 import java.io.File;
-import java.io.IOException;
 import java.util.Map;
 
 import static java.lang.String.format;
 
-@Named("FileSizeArtifactValidator")
+@Named("FileSizeValidator")
 @Singleton
 public class MuleAgentFileSizeValidator implements ArtifactValidator {
 
@@ -45,11 +44,12 @@ public class MuleAgentFileSizeValidator implements ArtifactValidator {
         long fileSizeInKB = fileSizeInBytes / 1024;
         long fileSizeInMB = fileSizeInKB / 1024;
 
-        System.out.println(format("File path: %s", applicationFilePath));
-        System.out.println(format("File size (MB): %s", fileSizeInMB));
+        LOGGER.info("File path: {}", applicationFilePath);
+        LOGGER.info("File size (MB): {}", fileSizeInMB);
 
         if (fileSizeInMB > limit) {
-            String message = format("File size exceeds the maximum limit '%s MB': Application: '%s' Size:'%s MB'.", limit, applicationName, fileSizeInMB);
+            String message = format("File size exceeds the maximum limit '%s MB' - Application: '%s' weighs '%s MB'.", limit, applicationName, fileSizeInMB;
+            LOGGER.error(message);
             throw new FileSizeLimitExceededException(message);
         }
     }
