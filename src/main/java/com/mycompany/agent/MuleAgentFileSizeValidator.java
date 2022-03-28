@@ -28,7 +28,7 @@ public class MuleAgentFileSizeValidator implements ArtifactValidator {
     }
 
     public String getName() {
-        return "defaultFileSize";
+        return "defaultFileSizeValidator";
     }
 
     public void validate(Map<String, String> args) throws ArtifactValidationException {
@@ -36,7 +36,7 @@ public class MuleAgentFileSizeValidator implements ArtifactValidator {
         String applicationFilePath = args.get(APPLICATION_FILE_PATH_KEY);
         String applicationName = args.get(APPLICATION_NAME_KEY);
         String limitArg = args.get(LIMIT_ARGS_KEY);
-        int limit =  Integer.parseInt(limitArg);
+        long limit =  Long.parseLong(limitArg);
 
         File file = new File(applicationFilePath);
 
@@ -48,7 +48,7 @@ public class MuleAgentFileSizeValidator implements ArtifactValidator {
         LOGGER.info("File size (MB): {}", fileSizeInMB);
 
         if (fileSizeInMB > limit) {
-            String message = format("File size exceeds the maximum limit '%s MB' - Application: '%s' weighs '%s MB'.", limit, applicationName, fileSizeInMB;
+            String message = format("File size exceeds the maximum limit '%s MB' - Application: '%s' weighs '%s MB'.", limit, applicationName, fileSizeInMB);
             LOGGER.error(message);
             throw new FileSizeLimitExceededException(message);
         }
